@@ -1,5 +1,5 @@
 {
-    "name": "irooit/hyperf-captcha",
+    "name": "zhuchunshu/hyperf-captcha",
     "type": "library",
     "license": "MIT",
     "keywords": [
@@ -9,7 +9,7 @@
     "description": "A CAPTCHA package for Hyperf Framework",
     "autoload": {
         "psr-4": {
-            "Irooit\\Captcha\\": "src/"
+            "Inkedus\\Captcha\\": "src/"
         }
     },
     "autoload-dev": {
@@ -50,7 +50,7 @@
     },
     "extra": {
         "hyperf": {
-            "config": "Irooit\\Captcha\\ConfigProvider"
+            "config": "Inkedus\\Captcha\\ConfigProvider"
         },
         "branch-alias":{
             "dev-master":"1.0.x-dev"

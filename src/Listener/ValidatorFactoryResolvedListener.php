@@ -7,13 +7,13 @@
  * PROJECT: tuoke_api
  */
 
-namespace Irooit\Captcha\Listener;
+namespace Inkedus\Captcha\Listener;
 
 use Hyperf\Event\Contract\ListenerInterface;
 use Hyperf\Utils\ApplicationContext;
 use Hyperf\Validation\Contract\ValidatorFactoryInterface;
 use Hyperf\Validation\Event\ValidatorFactoryResolved;
-use Irooit\Captcha\CaptchaFactory;
+use Inkedus\Captcha\CaptchaFactory;
 
 class ValidatorFactoryResolvedListener implements ListenerInterface
 {

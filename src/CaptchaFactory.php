@@ -9,9 +9,10 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
-namespace Irooit\Captcha;
+namespace Inkedus\Captcha;
 
 use Hyperf\Contract\ConfigInterface;
+use Hyperf\Contract\ContainerInterface;
 use Hyperf\Utils\Filesystem\Filesystem;
 use Hyperf\Utils\Str;
 use HyperfExt\Encryption\Crypt;
@@ -19,9 +20,15 @@ use Intervention\Image\Gd\Font;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManager;
 use Psr\SimpleCache\CacheInterface;
+use Symfony\Component\Finder\Finder;
 
 class CaptchaFactory
 {
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
     /**
      * @var array
      */
@@ -59,9 +66,6 @@ class CaptchaFactory
      */
     protected $str;
 
-    /**
-     * @var
-     */
     protected $canvas;
 
     /**
@@ -197,7 +201,7 @@ class CaptchaFactory
         $type = ! empty($type) ? $type : 'default';
         $this->configure($type);
         $this->backgrounds = $this->files->files(__DIR__ . '/../assets/backgrounds');
-        $this->fonts = glob(realpath($this->config['fonts_dir']) . '/*.{ttf,otf}', GLOB_BRACE);
+        $this->fonts = $this->get_fonts();
         $generator = $this->generate();
         $this->text = $generator['value'];
 
@@ -247,10 +251,9 @@ class CaptchaFactory
      * DATE: 2021/11/25
      * TIME: 2:19 下午
      * AUTHOR: hongcoo.
-     * @param $value
-     * @param $hashedValue
+     * @param mixed $value
+     * @param mixed $hashedValue
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     * @return bool
      */
     public function validate($value, $hashedValue, array $options = []): bool
     {
@@ -435,7 +438,7 @@ class CaptchaFactory
      */
     protected function angle(): int
     {
-        return rand((-1 * $this->angle), $this->angle);
+        return rand(-1 * $this->angle, $this->angle);
     }
 
     /**
@@ -448,5 +451,16 @@ class CaptchaFactory
     protected function enCrypt(string $text, int $expiresAt): string
     {
         return Crypt::encrypt([strtolower($text), $expiresAt, random_bytes(16)], true, $this->config['encryption_driver']);
+    }
+
+    private function get_fonts()
+    {
+        $fonts = [];
+        $path = $this->config['fonts_dir'];
+        $finder = Finder::create()->in($path)->files()->name('*.ttf')->name('*.otf');
+        foreach ($finder as $item) {
+            $fonts[] = $item->getRealPath();
+        }
+        return $fonts;
     }
 }

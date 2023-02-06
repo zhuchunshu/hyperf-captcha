@@ -9,9 +9,9 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
-namespace Irooit\Captcha;
+namespace Inkedus\Captcha;
 
-use Irooit\Captcha\Listener\ValidatorFactoryResolvedListener;
+use Inkedus\Captcha\Listener\ValidatorFactoryResolvedListener;
 
 class ConfigProvider
 {
@@ -24,13 +24,13 @@ class ConfigProvider
             'publish' => [
                 [
                     'id' => 'config',
-                    'description' => 'The config for Irooit/hyperf-captcha.',
+                    'description' => 'The config for zhuchunshu/hyperf-captcha.',
                     'source' => __DIR__ . '/../publish/hi_captcha.php',
                     'destination' => BASE_PATH . '/config/autoload/hi_captcha.php',
                 ],
                 [
                     'id' => 'fonts',
-                    'description' => 'The fonts for Irooit/hyperf-captcha.',
+                    'description' => 'The fonts for zhuchunshu/hyperf-captcha.',
                     'source' => __DIR__ . '/../publish/fonts',
                     'destination' => BASE_PATH . '/storage/fonts',
                 ],
